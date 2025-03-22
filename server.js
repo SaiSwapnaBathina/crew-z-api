@@ -14,7 +14,7 @@ connectDB();
 
 /*  Root route for testing */ 
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Crew-Z Backend is Running 🚀' });
+  res.status(200).json({ message: 'Crew-Z Backend is Running ' });
 });
 
 /* Define PORT */ 
