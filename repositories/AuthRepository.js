@@ -1,6 +1,6 @@
-import CrudRepository from "./CrudRepository.js";
+import crudRepository from "./crudRepository.js";
 
-export default class AuthRepository extends CrudRepository {
+export default class AuthRepository extends crudRepository {
   constructor(model) {
     // Accepts a Mongoose model (WorkerModel or ClientModel) during instantiation
     super(model);

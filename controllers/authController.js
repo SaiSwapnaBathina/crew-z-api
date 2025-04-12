@@ -1,6 +1,6 @@
-import AuthService from "../services/AuthService.js";
+import AuthService from "../services/authService.js";
 
-export default class authController {
+export default class AuthController {
   constructor() {
     this.service = new AuthService();
   }
@@ -49,6 +49,7 @@ export default class authController {
       res.status(400).json({ error: error.message });
     }
   };
+
 
   resetPassword = async (req, res) => {
     try {
