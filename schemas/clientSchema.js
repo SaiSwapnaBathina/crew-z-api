@@ -22,7 +22,8 @@ const clientSchema = new mongoose.Schema({
   },
   verified: { type: Boolean, default: false },
   preferredCategories: [String],
-  notesForWorker: { type: String }
+  notesForWorker: { type: String },
+  role: { type: String, enum: ['client', 'worker'], required: true },
 }, { timestamps: true });
 
 

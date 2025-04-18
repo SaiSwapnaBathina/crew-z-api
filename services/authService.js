@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import transporter from "../config/emailTransporter.js";
 import { JWT_SECRET } from "../config/config.js";
-import Worker from "../models/WorkerModel.js";
-import Client from "../models/ClientModel.js";
+import Worker from "../models/workerModel.js";
+import Client from "../models/clientModel.js";
 
 // Helper to get model and repo dynamically
 const getModelAndRepo = (role) => {
