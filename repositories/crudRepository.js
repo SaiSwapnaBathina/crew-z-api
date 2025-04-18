@@ -81,4 +81,12 @@ export default class CrudRepository {
       throw new Error(`Error while deleting document: ${error.message}`);
     }
   };
+   // **New: bulk delete**
+  deleteMany = async (filter, options = {}) => {
+    try {
+      return await this.model.deleteMany(filter, options).exec();
+    } catch (error) {
+      throw new Error(`Error while deleting documents: ${error.message}`);
+    }
+  };
 }

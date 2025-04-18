@@ -106,4 +106,19 @@ export default class AuthService {
 
     return { message: "Password reset successful" };
   };
+    verifyToken = async (token) => {
+      try {
+        if (!token) {
+          throw Error("Token not provided");
+        }
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (!decoded) {
+          throw Error("Invalid token");
+        }
+        return decoded;
+      } catch (error) {
+        throw Error(`Error while verifying token: ${error.message}`);
+      }
+    };
+  
 }
