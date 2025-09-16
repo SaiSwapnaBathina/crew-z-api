@@ -1,20 +1,59 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+// const workerSchema = new mongoose.Schema({
+//   username : {type : String , required:true , unique:true},
+//   email: { type: String, required: true, unique: true },
+//   password: { type: String, required: true },  // Added required password field
+//   role: { type: String, default: "worker" }, // Add this
+//   name: { 
+//     type: String, 
+//     required: true 
+//   },
+//   hourlyRate: { type: Number, default: 0 },
+//   location: { type: String },
+
+//   phone: { type: String, required: true },
+//   bio: { type: String },
+//   skills: { type: [String], required: true },
+//   experienceYears: { type: Number, default: 0 },
+  
+//   availability: {
+//     days: { type: [String], default: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
+//     timeSlots: { type: [String], default: ["Morning", "Afternoon", "Evening"] }
+//   },
+//   workHistory: [{
+//     job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' },
+//     review: { type: mongoose.Schema.Types.ObjectId, ref: 'Feedback' }
+//   }],
+//   documents: {
+//     aadharNumber: { type: String },
+//     idProofURL: { type: String }
+//   },
+//   languages: { type: [String], default: ["English"] },
+//   isVerified: { type: Boolean, default: false },
+//   isActive: { type: Boolean, default: true }
+// }, { timestamps: true });
+
+// Pre-save hook to hash password before saving
+
 const workerSchema = new mongoose.Schema({
-  username : {type : String , required:true , unique:true},
+  username: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },  // Added required password field
-  role: { type: String, default: "worker" }, // Add this
-  name: { 
-    type: String, 
-    required: true 
-  },
+  password: { type: String, required: true },
   phone: { type: String, required: true },
+  location: { type: String }, // New field
+  role: { type: String, default: "worker" },
   bio: { type: String },
   skills: { type: [String], required: true },
   experienceYears: { type: Number, default: 0 },
-  
+  hourlyRate: { type: Number, default: 0 }, // New field
+  field: { 
+    type: String, 
+    enum: ['Agriculture', 'Construction', 'Home Service', 'Education', 'Electrical'],
+    required: true 
+  },  
   availability: {
     days: { type: [String], default: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
     timeSlots: { type: [String], default: ["Morning", "Afternoon", "Evening"] }
@@ -30,9 +69,8 @@ const workerSchema = new mongoose.Schema({
   languages: { type: [String], default: ["English"] },
   isVerified: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true }
-}, { timestamps: true });
+}, { timestamps: true })
 
-// Pre-save hook to hash password before saving
 workerSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   try {

@@ -12,33 +12,57 @@ export default class CrudRepository {
     }
   };
 
-  findOne = async (query) => {
+  findOne = async (query, options = {}) => {
     try {
-      const doc = await this.model.findOne(query);
-      return doc;
+      let dbQuery = this.model.findOne(query);
+  
+      if (options.session) {
+        dbQuery = dbQuery.session(options.session);
+      }
+  
+      return await dbQuery.exec();
     } catch (error) {
       throw new Error(`Error while finding document: ${error.message}`);
     }
   };
-
-  findById = async (id) => {
+  
+  // findById = async (id) => {
+  //   try {
+  //     const doc = await this.model.findById(id).exec();
+  //     if (!doc) throw new Error("Document not found");
+  //     return doc;
+  //   } catch (error) {
+  //     throw new Error(`Error while finding document by ID: ${error.message}`);
+  //   }
+  // };
+  async findById(id) {
     try {
-      const doc = await this.model.findById(id).exec();
-      if (!doc) throw new Error("Document not found");
+      const doc = await this.model.findById(id);
+      if (!doc) return null; // <-- return null instead of throwing
       return doc;
     } catch (error) {
       throw new Error(`Error while finding document by ID: ${error.message}`);
     }
-  };
+  }
+  
 
-  find = async (query) => {
+  find = async (query, populateFields = []) => {
     try {
-      const docs = await this.model.find(query);
-      return docs;
+      let dbQuery = this.model.find(query);
+  
+      // Optional populate
+      if (populateFields.length) {
+        populateFields.forEach(field => {
+          dbQuery = dbQuery.populate(field);
+        });
+      }
+
+      return await dbQuery.exec();
     } catch (error) {
       throw new Error(`Error while finding documents: ${error.message}`);
     }
   };
+  
 
   findByIdAndUpdate = async (id, data) => {
     try {

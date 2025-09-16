@@ -3,6 +3,7 @@ import Client from "../models/clientModel.js";
 import Job from "../models/jobModel.js";
 import Booking from "../models/bookingModel.js";
 import Feedback from "../models/feedbackModel.js";
+import Worker from "../models/workerModel.js";//added
 
 export default class ClientRepository {
   constructor() {
@@ -10,6 +11,7 @@ export default class ClientRepository {
     this.job      = new CrudRepository(Job);
     this.booking  = new CrudRepository(Booking);
     this.feedback = new CrudRepository(Feedback);
+    this.worker = new CrudRepository(Worker);//added
   }
 
   // Custom method to cascade delete all related data
